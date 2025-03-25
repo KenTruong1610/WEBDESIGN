@@ -1,0 +1,45 @@
+.banner, .rsidebar1, .lsidebar1,.lsidebar2,.lsidebar3, .lsidebar4,.lsidebar5, .content1, .content2, .content3,.content4, .content5, .rsidebar1, .rsidebar2, .rsidebar3,.rsidebar4, .rsidebar5, .footer{
+    height: 100px;
+}
+
+.container{
+    width: 790px;
+    margin: 0 auto;
+
+}
+.banner{background-color: #8face1; height:83px; width:102.7%}
+
+.lsidebar1{background-color: #c0ff4d; width:15%; position: relative; top: 10px;}
+.lsidebar2{background-color: #3fc1ff; width:15%;left:20px; height: 100px; position: relative; top: 10px;}
+.lsidebar3{background-color: #8face1; width: 32.7%; left:40px; height: 100px; position: relative; top: 10px;}
+.lsidebar4{background-color: #7030a0; width: 15%;left: 60px; height: 100px; position: relative; top: 10px;}
+.lsidebar5{background-color: #1f88c8; width: 15%; left: 80px; height: 100px; position: relative; top: 10px;}
+
+.content1 {
+    background-color: #00b050;
+    width: 15%;
+    position: relative;
+    top: 20px;
+}
+.content2{background-color: #8eabde; width:15%;left:20px; height: 100px; position: relative; top: 20px;}
+.content3{background-color: #c00000; width: 15%; left:40px; height: 100px; position: relative; top: 20px;}
+.content4{background-color: #ffc000; width:15%;left: 60px; height: 100px; position: relative; top: 20px;}
+.content5{background-color: #a4d329; width: 32.7%; left: 80px; height: 100px; position: relative; top: 20px;}
+
+.rsidebar1{background-color: #fbcf74; width:15%; position: relative; top: 30px;}
+.rsidebar2{background-color: #7f7f7f; width:15%;left:20px; height: 100px; position: relative; top: 30px;}
+.rsidebar3{background-color: #00405f; width: 32.7%; left:40px; height: 100px; position: relative; top: 30px;}
+.rsidebar4{background-color: #78c5dd; width:15%;left: 60px; height: 100px; position: relative; top: 30px;}
+.rsidebar5{background-color: #227088; width: 15%; left: 80px; height: 100px; position: relative; top: 30px;}
+
+.lsidebar1, .lsidebar2, .lsidebar3, .lsidebar4, .lsidebar5, .content1, .content2, .content3, .content4, .content5, .rsidebar1, .rsidebar2, .rsidebar3, .rsidebar4, .rsidebar5 {
+    float: left;
+}
+
+.footer {
+    background-color: #0070c0;
+	width:102.7%;
+    height: 50px;
+    position: relative;
+    top: 40px;
+}
