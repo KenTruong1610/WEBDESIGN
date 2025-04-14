@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator with History</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin: 20px; background: #777; }
+        #calculator { background: #888; padding: 20px; border-radius: 10px; box-shadow: 5px 5px 15px #555; }
+        #display { width: 96%; height: 50px; margin-bottom: 15px; padding: 5px; font-size: 1.5em; text-align: right; background: black; color: white; border: 3px solid #444; box-shadow: 3px 3px 5px #333; }
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        button { padding: 20px; font-size: 1.5em; cursor: pointer; background: black; color: white; border: 2px solid white; box-shadow: 2px 2px 5px #222; border-radius: 5px; }
+        button:active { box-shadow: none; }
+        #history { margin-top: 20px; width: 100%; max-width: 300px; background: #eee; padding: 10px; border-radius: 5px; }
+        #history li { list-style: none; padding: 5px; border-bottom: 1px solid #ddd; cursor: pointer; }
+        #history li:hover { background: #ddd; }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button onclick="calc.append('1')">1</button>
+            <button onclick="calc.append('2')">2</button>
+            <button onclick="calc.append('3')">3</button>
+            <button onclick="calc.append('+')">+</button>
+            <button onclick="calc.append('4')">4</button>
+            <button onclick="calc.append('5')">5</button>
+            <button onclick="calc.append('6')">6</button>
+            <button onclick="calc.append('-')">-</button>
+            <button onclick="calc.append('7')">7</button>
+            <button onclick="calc.append('8')">8</button>
+            <button onclick="calc.append('9')">9</button>
+            <button onclick="calc.append('*')">x</button>
+            <button onclick="calc.append('(')">(</button>
+            <button onclick="calc.append('0')">0</button>
+            <button onclick="calc.append(')')">)</button>
+            <button onclick="calc.append('/')">/</button>
+            <button onclick="calc.clear()">c</button>
+            <button onclick="calc.calculate()">=</button>
+        </div>
+    </div>
+    <ul id="history"></ul>
+
+    <script lang= "javascript">
+        class Calculator {
+            constructor() {
+                this.stack = []; 
+                this.expression = "";
+            }
+
+            append(value) {
+                this.expression += value;
+                this.updateDisplay();
+            }
+
+            calculate() {
+                try {
+                    const result = eval(this.expression);
+                    this.stack.push(this.expression + " = " + result);
+                    this.expression = String(result);
+                } catch (e) {
+                    this.expression = "Error";
+                }
+                this.updateDisplay();
+                this.updateHistory();
+            }
+
+            updateDisplay() {
+                document.getElementById("display").value = this.expression;
+            }
+
+            updateHistory() {
+                const history = document.getElementById("history");
+                history.innerHTML = "";
+                this.stack.forEach((entry, index) => {
+                    const item = document.createElement("li");
+                    item.textContent = entry;
+                    item.onclick = () => {
+                        this.expression = entry.split(" = ")[0];
+                        this.updateDisplay();
+                    };
+                    history.appendChild(item);
+                });
+            }
+
+            clear() {
+                this.expression = "";
+                this.updateDisplay();
+            }
+        }
+
+        const calc = new Calculator();
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #e3faff;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width:80%;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="range"], input[type="number"] {
+            width: 100%;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #saved-names {
+            margin-top: 20px;
+        }
+        #saved-names button {
+            background: #28a745;
+            margin: 5px;
+        }
+        #saved-names button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>PERSON FORM</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="userName">Name:</label>
+            <input type="text" id="userName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="age">Age: <span id="ageValue">25</span></label>
+            <input type="range" id="age" min="1" max="100" value="25" oninput="updateAge()">
+        </div>
+        <div class="form-group">
+            <label for="gpa">GPA:</label>
+            <input type="number" id="gpa" step="0.1" min="0" max="10" value="0">
+        </div>
+        <button onclick="resetForm()">Reset</button>
+        <button onclick="createPerson()">Create</button>
+    </div>
+    <h1>SAVE FORM</h1>
+    <div id="saved-names" class="form-container"></div>
+
+    <script>
+        let personId = 1;
+
+        function updateAge() {
+            document.getElementById('ageValue').innerText = document.getElementById('age').value;
+        }
+
+        function resetForm() {
+            document.getElementById('userName').value = "";
+            document.getElementById('age').value = 25;
+            document.getElementById('gpa').value = 0;
+            updateAge();
+        }
+
+        function createPerson() {
+            const name = document.getElementById('userName').value.trim();
+            const age = document.getElementById('age').value;
+            const gpa = document.getElementById('gpa').value;
+
+            if (!name) {
+                alert("Please enter a name.");
+                return;
+            }
+
+            const person = { id: personId++, name, age, gpa };
+            addPersonButton(person);
+        }
+
+        function addPersonButton(person) {
+            const btn = document.createElement('button');
+            btn.textContent = person.name;
+            btn.onclick = () => alert(`ID: ${person.id}\nName: ${person.name}\nAge: ${person.age}\nGPA: ${person.gpa}`);
+            document.getElementById('saved-names').appendChild(btn);
+        }
+    </script>
+</body>
+</html>

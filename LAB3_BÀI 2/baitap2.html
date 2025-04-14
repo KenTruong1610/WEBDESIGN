@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prefix/Postfix Calculator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+
+    .calculator {
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input{
+      width: 95%;
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background: #dff0d8;
+      margin: 5px 0;
+      padding: 8px;
+      border-left: 4px solid #3c763d;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Prefix/Postfix Calculator</h2>
+    <input type="text" id="expression" placeholder="Enter expression">
+    
+    <select id="type">
+      <option value="postfix">Postfix</option>
+      <option value="prefix">Prefix</option>
+    </select>
+    
+    <button onclick="calculate()">Evaluate</button>
+    <div id="result"></div>
+
+    <h3>History (Stack)</h3>
+    <ul id="history"></ul>
+  </div>
+
+  <script>
+    let historyStack = [];
+
+    function calculate() {
+      const expression = document.getElementById("expression").value.trim();
+      const type = document.getElementById("type").value;
+      let result = "";
+
+      try {
+        result = type === "postfix" ? evalPostfix(expression) : evalPrefix(expression);
+        historyStack.push(`${expression} = ${result}`);
+        updateHistory();
+        document.getElementById("result").textContent = `Result: ${result}`;
+      } catch (error) {
+        document.getElementById("result").textContent = "Invalid expression!";
+      }
+    }
+
+    function updateHistory() {
+      const historyList = document.getElementById("history");
+      historyList.innerHTML = "";
+      [...historyStack].reverse().forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+
+    function evalPostfix(expr) {
+      const stack = [];
+      const tokens = expr.split(" ");
+      tokens.forEach(token => {
+        if (!isNaN(token)) {
+          stack.push(parseFloat(token));
+        } else {
+          const b = stack.pop();
+          const a = stack.pop();
+          stack.push(operate(a, b, token));
+        }
+      });
+      return stack[0];
+    }
+
+    function evalPrefix(expr) {
+      const stack = [];
+      const tokens = expr.split(" ").reverse();
+      tokens.forEach(token => {
+        if (!isNaN(token)) {
+          stack.push(parseFloat(token));
+        } else {
+          const a = stack.pop();
+          const b = stack.pop();
+          stack.push(operate(a, b, token));
+        }
+      });
+      return stack[0];
+    }
+
+    function operate(a, b, op) {
+      switch (op) {
+        case "+": return a + b;
+        case "-": return a - b;
+        case "*": return a * b;
+        case "/": return a / b;
+        default: throw new Error("Unknown operator");
+      }
+    }
+  </script>
+</body>
+</html>
